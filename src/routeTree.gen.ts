@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ChatIndexImport } from './routes/chat/index'
+import { Route as AuthRegistrationIndexImport } from './routes/auth/registration/index'
+import { Route as AuthLoginIndexImport } from './routes/auth/login/index'
 
 // Create/Update Routes
 
@@ -23,6 +25,16 @@ const IndexRoute = IndexImport.update({
 
 const ChatIndexRoute = ChatIndexImport.update({
   path: '/chat/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRegistrationIndexRoute = AuthRegistrationIndexImport.update({
+  path: '/auth/registration/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLoginIndexRoute = AuthLoginIndexImport.update({
+  path: '/auth/login/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -38,11 +50,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatIndexImport
       parentRoute: typeof rootRoute
     }
+    '/auth/login/': {
+      preLoaderRoute: typeof AuthLoginIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/registration/': {
+      preLoaderRoute: typeof AuthRegistrationIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, ChatIndexRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexRoute,
+  ChatIndexRoute,
+  AuthLoginIndexRoute,
+  AuthRegistrationIndexRoute,
+])
 
 /* prettier-ignore-end */
