@@ -5,7 +5,7 @@ import {Main} from '../pages/main/main';
 export const Route = createFileRoute('/')({
 	beforeLoad({context}) {
 		const {signIn} = context.authentication;
-		if (signIn) {
+		if (!signIn) {
 			throw redirect({to: '/auth/login'});
 		}
 	},
